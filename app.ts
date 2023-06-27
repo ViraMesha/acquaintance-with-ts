@@ -1,11 +1,17 @@
-const button = document.querySelector("button")! as HTMLButtonElement;
-const input1 = document.getElementById("num1")! as HTMLInputElement;
-const input2 = document.getElementById("num2")! as HTMLInputElement;
+// 1. Basic ts types
 
-function add(num1: number, num2: number) {
-  return num1 + num2;
-}
+// let age = 50;
+// let name = 'Max';
+// let toggle = true;
+// let empty = null;
+// let notInitialize = undefined;
+// let callback = (a) => { return 100 + a };
 
-button.addEventListener("click", function () {
-  console.log(add(+input1.value, +input2.value));
-});
+let age: number;
+let name: string;
+let toggle: boolean;
+let empty: null;
+let notInitialize: undefined;
+let callback = (a: number): number => {
+  return 100 + a;
+};
