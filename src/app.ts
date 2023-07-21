@@ -1,11 +1,52 @@
-const button = document.querySelector("button")! as HTMLButtonElement;
-const input1 = document.getElementById("num1")! as HTMLInputElement;
-const input2 = document.getElementById("num2")! as HTMLInputElement;
+class Key {
+  private signature: number;
+  constructor() {
+    this.signature = Math.random();
+  }
 
-function add(num1: number, num2: number) {
-  return num1 + num2;
+  getSignature(): number {
+    return this.signature;
+  }
 }
 
-button.addEventListener("click", function () {
-  console.log(add(+input1.value, +input2.value));
-});
+class Person {
+  constructor(private key: Key) {}
+
+  getKey(): Key {
+    return this.key;
+  }
+}
+
+abstract class House {
+  protected door: boolean = false;
+  protected tenants: Person[] = [];
+
+  constructor(protected key: Key) {}
+
+  comeIn(person: Person): void {
+    if (!this.door) {
+      throw new Error("The door is closed");
+    }
+    this.tenants.push(person);
+    console.log("Person is inside");
+  }
+
+  abstract openDoor(key: Key): boolean;
+}
+
+class MyHouse extends House {
+  openDoor(key: Key) {
+    if (key.getSignature() !== this.key.getSignature()) {
+      throw new Error("Key to another door");
+    }
+    return (this.door = true);
+  }
+}
+
+const key = new Key();
+
+const person = new Person(key);
+const myHose = new MyHouse(key);
+
+myHose.openDoor(person.getKey());
+myHose.comeIn(person);
